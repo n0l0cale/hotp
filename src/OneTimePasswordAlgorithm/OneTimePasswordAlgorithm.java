@@ -1,3 +1,5 @@
+package OneTimePasswordAlgorithm;
+
 import java.io.IOException;
 import java.io.File;
 import java.io.DataInputStream;
@@ -10,6 +12,9 @@ import java.security.InvalidKeyException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import OneTimePasswordAlgorithm.Base32String;
+import OneTimePasswordAlgorithm.Base32String.DecodingException;
 
 /**
  * This class contains static methods that are used to calculate the One-Time
@@ -159,14 +164,16 @@ public class OneTimePasswordAlgorithm {
 		return result;
 	}
 
-	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException {
+	public static void main(String[] args) throws InvalidKeyException, NoSuchAlgorithmException, DecodingException {
 		// Seed
-		String secret = "12345678901234567890";
-		byte[] secretBytes = secret.getBytes();
+		// byte[] secret = { 'H', 'e', 'l', 'l', 'o', '!', (byte) 0xDE, (byte) 0xAD, (byte) 0xBE, (byte) 0xEF }; // as per information by https://github.com/google/google-authenticator/wiki/Key-Uri-Format 
+		String secrethashed = "JBSWY3DPEHPK3PXP"; // enter this code to your Google Authenticator Application and you should get the same results
+		byte[] secret = Base32String.decode(secrethashed);
+		// byte[] secretBytes = secret.getBytes();
 
 		int counter;
 		for (counter = 0; counter < 10; counter++) {
-			String strGeneratedToken = OneTimePasswordAlgorithm.generateOTP(secretBytes, counter, 6, false, 16);
+			String strGeneratedToken = OneTimePasswordAlgorithm.generateOTP(secret, counter, 6, false, 16);
 			System.out.println(strGeneratedToken);
 		}
 	}
