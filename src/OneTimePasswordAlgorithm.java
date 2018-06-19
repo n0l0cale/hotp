@@ -165,8 +165,8 @@ public class OneTimePasswordAlgorithm {
 		byte[] secretBytes = secret.getBytes();
 
 		int counter;
-		for (counter = 0; counter < 9; counter++) {
-			String strGeneratedToken = OneTimePasswordAlgorithm.generateOTP(secretBytes, counter, 6, false, 0);
+		for (counter = 0; counter < 10; counter++) {
+			String strGeneratedToken = OneTimePasswordAlgorithm.generateOTP(secretBytes, counter, 6, false, 16);
 			System.out.println(strGeneratedToken);
 		}
 	}
